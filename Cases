@@ -1,0 +1,282 @@
+import { db, casesTable } from "@workspace/db";
+
+const extraCases = [
+  {
+    title: "Diabetic Macular Edema with Systemic Disease",
+    topic: "Retina",
+    difficulty: "hard" as const,
+    chiefComplaint: "gradual blurry vision in both eyes for several months",
+    patientDemographics: {
+      age: 58,
+      sex: "Male",
+      occupation: "Truck driver",
+      chiefComplaint: "gradual blurry vision in both eyes for several months",
+    },
+    reviewOfSystems: ["Type 2 diabetes mellitus x 15 years", "Hypertension", "Peripheral neuropathy", "Recent HbA1c of 9.2%"],
+    currentMedications: ["Metformin 1000mg BID", "Lisinopril 10mg daily", "Insulin glargine 30 units QHS"],
+    examFindings: {
+      visualAcuity: { odSc: "20/80", osSc: "20/100", odCc: null, osCc: null, pinhole: "No improvement OU" },
+      slitLamp: {
+        lids: "Normal OU",
+        conjunctiva: "Clear and white OU",
+        cornea: "Clear OU",
+        anteriorChamber: "Deep and quiet OU",
+        iris: "Normal OU",
+        lens: "1+ nuclear sclerosis OU",
+      },
+      refraction: {
+        odSphere: "+1.00",
+        odCylinder: "-0.50",
+        odAxis: "90",
+        osSphere: "+1.25",
+        osCylinder: "-0.75",
+        osAxis: "85",
+        addPower: "+2.50",
+        odVaWithRx: "20/70",
+        osVaWithRx: "20/80",
+      },
+      dilatedFindings: {
+        iop: { od: "16 mmHg", os: "17 mmHg" },
+        pupilResponse: "No RAPD; pupils equal and reactive OU",
+        opticDisc: { od: "Pink, distinct margins, 0.4 C/D", os: "Pink, distinct margins, 0.4 C/D" },
+        macula: { od: "Macular thickening, hard exudates in circinate ring", os: "Macular thickening with cystoid changes, hard exudates" },
+        vessels: { od: "Dilated, tortuous veins; dot-blot hemorrhages", os: "Dilated veins; flame hemorrhages, neovascularization of disc (NVD)" },
+        periphery: { od: "Dot-blot hemorrhages, microaneurysms throughout", os: "Neovascularization elsewhere (NVE), vitreous haze" },
+      },
+      additionalFindings: { "Vitreous": "Early vitreous hemorrhage OS" },
+    },
+    availableAncillaryTests: [
+      "OCT Macula OU", "Fluorescein Angiography", "HbA1c", "Blood Pressure Check",
+      "Humphrey Visual Field 24-2", "Fundus Photography", "B-scan Ultrasound OS"
+    ],
+    ancillaryTestResults: {
+      "OCT Macula OU": "OD: 410 micron central macular thickness; subretinal and intraretinal fluid. OS: 480 micron CMT; extensive cystoid macular edema.",
+      "Fluorescein Angiography": "OD: Diffuse macular leakage, microaneurysms. OS: NVD leakage, NVE temporal periphery, extensive macular non-perfusion.",
+      "HbA1c": "9.2% — poor glycemic control",
+      "Blood Pressure Check": "158/94 mmHg — uncontrolled hypertension",
+      "Humphrey Visual Field 24-2": "Diffuse depression OU; no classic field defect pattern",
+      "B-scan Ultrasound OS": "Peripheral vitreous opacity consistent with early vitreous hemorrhage; no retinal detachment",
+    },
+    keyPoints: [
+      "Diabetic macular edema (DME) OD; severe non-proliferative or early proliferative DR",
+      "Proliferative diabetic retinopathy (PDR) OS with NVD, NVE, vitreous hemorrhage",
+      "Urgent anti-VEGF injection OD; urgent panretinal photocoagulation (PRP) OS",
+      "Systemic co-management: optimize HbA1c and blood pressure control",
+      "Refer for immediate vitreoretinal evaluation OS given vitreous hemorrhage",
+    ],
+    modelAssessment: "OD: Diabetic macular edema in the setting of moderate to severe non-proliferative diabetic retinopathy. OS: Proliferative diabetic retinopathy with neovascularization of disc and elsewhere, early vitreous hemorrhage, and center-involving diabetic macular edema.",
+    modelPlan: "1. Intravitreal anti-VEGF injection (bevacizumab/ranibizumab) OD today for center-involving DME.\n2. Urgent vitreoretinal referral OS for PRP and possible vitrectomy given NVD and vitreous hemorrhage.\n3. Urgent co-management with primary care and endocrinology to address HbA1c (9.2%) and HTN (158/94).\n4. Patient education on glycemic self-monitoring, foot care, and smoking cessation.\n5. Return to clinic in 4 weeks OD for repeat anti-VEGF evaluation.\n6. Fundus photography and OCT at each visit for documentation.",
+    patientPersonality: {
+      opening: "Doc, my vision has been getting worse and I can't lose my CDL license. I drive for a living.",
+      keywords: {
+        duration: "It started maybe 6 months ago, both eyes. I thought it was just needing stronger glasses.",
+        diabetes: "Yeah I have diabetes. I've been bad about controlling it. My sugar's been high.",
+        medications: "I take metformin and some insulin at night, and a blood pressure pill.",
+        vision: "Things look blurry and sometimes I see dark spots, especially in the left eye.",
+        family: "My father went blind from diabetes. That's why I'm scared.",
+        pain: "No pain at all. Just blurry.",
+        floaters: "Yes, I've noticed more floaters recently especially in the left eye.",
+        flashes: "No flashing lights.",
+      },
+      fallback: "I'm not sure, but I know my diabetes has been out of control lately.",
+    },
+  },
+  {
+    title: "Convergence Insufficiency in a School-Age Child",
+    topic: "Pediatrics",
+    difficulty: "easy" as const,
+    chiefComplaint: "headaches and double vision when reading",
+    patientDemographics: {
+      age: 9,
+      sex: "Female",
+      occupation: "3rd grade student",
+      chiefComplaint: "headaches and double vision when reading",
+    },
+    reviewOfSystems: ["No systemic illness", "Performing below grade level in reading", "No head trauma", "No neurological symptoms"],
+    currentMedications: ["None"],
+    examFindings: {
+      visualAcuity: { odSc: "20/20", osSc: "20/20", odCc: null, osCc: null, pinhole: "N/A" },
+      slitLamp: {
+        lids: "Normal OU",
+        conjunctiva: "Clear and white OU",
+        cornea: "Clear OU",
+        anteriorChamber: "Deep and quiet OU",
+        iris: "Normal OU",
+        lens: "Clear OU",
+      },
+      refraction: {
+        odSphere: "+0.50",
+        odCylinder: null,
+        odAxis: null,
+        osSphere: "+0.50",
+        osCylinder: null,
+        osAxis: null,
+        addPower: null,
+        odVaWithRx: "20/20",
+        osVaWithRx: "20/20",
+      },
+      dilatedFindings: {
+        iop: { od: "13 mmHg", os: "14 mmHg" },
+        pupilResponse: "PERRLA; no RAPD",
+        opticDisc: { od: "Pink, distinct margins, 0.2 C/D", os: "Pink, distinct margins, 0.2 C/D" },
+        macula: { od: "Flat and even", os: "Flat and even" },
+        vessels: { od: "Normal caliber", os: "Normal caliber" },
+        periphery: { od: "No pathology", os: "No pathology" },
+      },
+      additionalFindings: {
+        "Cover Test at Near": "Exophoria 12Δ at 33cm",
+        "NPC": "Break at 8cm, recovery at 15cm (reduced)",
+        "Vergence Amplitudes": "Positive fusional vergence (PFV) at near: 12/14/8 (reduced)",
+        "Stereopsis": "Randot: 100 seconds of arc",
+      },
+    },
+    availableAncillaryTests: [
+      "Near Point of Convergence (NPC) Test", "CISS Questionnaire", "Stereopsis Testing",
+      "Cover-Uncover Test", "Vergence Amplitude Testing", "MRI Brain/Orbits", "Color Vision Testing"
+    ],
+    ancillaryTestResults: {
+      "Near Point of Convergence (NPC) Test": "Break: 8 cm, Recovery: 15 cm. Normal is ≤5 cm break. Significantly reduced.",
+      "CISS Questionnaire": "Score 32/48 — highly symptomatic for convergence insufficiency (cutoff ≥16 in children)",
+      "Stereopsis Testing": "Randot stereoacuity: 100 sec of arc (mildly reduced)",
+      "Cover-Uncover Test": "12Δ exophoria at near; orthophoria at distance; no tropia",
+      "Vergence Amplitude Testing": "PFV at near: x/12/8 (reduced; normal ≥15 recovery)",
+      "Color Vision Testing": "Normal OU (Ishihara)",
+      "MRI Brain/Orbits": "Not indicated at this time without neurological signs",
+    },
+    keyPoints: [
+      "Convergence insufficiency (CI): remote NPC, symptomatic exophoria, reduced PFV at near",
+      "CISS score ≥16 confirms symptomatic CI in children",
+      "First-line treatment: office-based vergence/accommodative therapy (OBVAT)",
+      "Pencil push-ups and home-based therapy are less effective than OBVAT",
+      "Rule out neurological cause if NPC does not improve or if cranial nerve palsies present",
+    ],
+    modelAssessment: "Convergence insufficiency OU — symptomatic, with reduced NPC (8/15 cm), significant near exophoria (12Δ), and reduced positive fusional vergence at near. CISS score 32/48 confirms high symptom burden.",
+    modelPlan: "1. Prescribe low hyperopic correction (+0.50 OU) to reduce accommodative demand.\n2. Refer to in-office vision therapy program: office-based vergence/accommodative therapy (OBVAT) per CITT protocol — 12 weeks, 1 hour/week.\n3. Educate parents on the connection between CI and reading difficulties.\n4. Assign home-based pencil push-up exercises as adjunct therapy.\n5. Recheck NPC, vergence amplitudes, and CISS score in 6 weeks.\n6. Consider neurological referral only if symptoms worsen or NPC fails to respond.",
+    patientPersonality: {
+      opening: "My head hurts every day at school when I try to read. And sometimes I see two of everything.",
+      keywords: {
+        duration: "It started at the beginning of the school year, about 3 months ago.",
+        reading: "When I read for a long time, things get blurry and I see two words instead of one.",
+        headaches: "The headache is right behind my eyes. It goes away when I stop reading.",
+        distance: "I can see the board at school just fine. It's only when things are close.",
+        school: "My teacher said I'm behind in reading. I have to re-read sentences a lot.",
+        family: "My mom wears glasses but my dad doesn't.",
+        history: "No, I've never had glasses before.",
+      },
+      fallback: "I'm not sure. It just hurts when I read a lot.",
+    },
+  },
+  {
+    title: "Herpes Zoster Ophthalmicus",
+    topic: "Anterior Segment",
+    difficulty: "hard" as const,
+    chiefComplaint: "painful rash on forehead and left eye irritation for 5 days",
+    patientDemographics: {
+      age: 71,
+      sex: "Male",
+      occupation: "Retired engineer",
+      chiefComplaint: "painful rash on forehead and left eye irritation for 5 days",
+    },
+    reviewOfSystems: [
+      "Painful vesicular rash on left forehead and tip of nose",
+      "Prodromal tingling 3 days before rash onset",
+      "No prior herpes zoster history",
+      "Immunocompetent (last labs 6 months ago normal)",
+    ],
+    currentMedications: ["Aspirin 81mg daily", "Atorvastatin 40mg daily", "Amlodipine 5mg daily"],
+    examFindings: {
+      visualAcuity: { odSc: "20/20", osSc: "20/50", odCc: null, osCc: null, pinhole: "20/40 OS" },
+      slitLamp: {
+        lids: "Left upper lid edema and erythema; vesicular crusting on upper lid margin OS",
+        conjunctiva: "2+ diffuse injection OS; papillary reaction",
+        cornea: "OD clear; OS: superficial punctate keratitis (SPK), fine dendritic lesions on corneal surface, mild stromal edema",
+        anteriorChamber: "Deep and quiet OD; 2+ cell and flare OS",
+        iris: "Normal OD; segmental iris atrophy OS at 3 and 9 o'clock (zoster-related)",
+        lens: "1+ nuclear sclerosis OU",
+      },
+      refraction: {
+        odSphere: "+1.00",
+        odCylinder: "-0.75",
+        odAxis: "180",
+        osSphere: "+1.00",
+        osCylinder: "-1.00",
+        osAxis: "175",
+        addPower: "+2.50",
+        odVaWithRx: "20/20",
+        osVaWithRx: "20/40",
+      },
+      dilatedFindings: {
+        iop: { od: "15 mmHg", os: "32 mmHg (markedly elevated)" },
+        pupilResponse: "No RAPD; left pupil mid-dilated and poorly reactive (sectoral sphincter palsy)",
+        opticDisc: { od: "Pink, distinct margins, 0.3 C/D", os: "Pink, distinct margins, 0.35 C/D" },
+        macula: { od: "Flat and even", os: "Flat and even" },
+        vessels: { od: "Normal caliber", os: "Normal caliber" },
+        periphery: { od: "No pathology", os: "No pathology" },
+      },
+      additionalFindings: {
+        "Hutchinson's Sign": "Vesicles on tip and side of nose (V1 distribution — nasociliary branch involvement)",
+        "Corneal Sensation": "Reduced OS compared to OD",
+      },
+    },
+    availableAncillaryTests: [
+      "Viral Culture / PCR of vesicles", "Corneal Fluorescein Staining", "Gonioscopy OS",
+      "Goldmann Visual Field", "Dilated Fundus Exam", "CBC/CMP", "HIV Test"
+    ],
+    ancillaryTestResults: {
+      "Viral Culture / PCR of vesicles": "VZV PCR positive — confirms Varicella Zoster Virus",
+      "Corneal Fluorescein Staining": "Dendritic staining OS with terminal bulbs (pseudo-dendrites, no true ulcers); SPK throughout",
+      "Gonioscopy OS": "Open angles; trabecular meshwork inflammation (trabeculitis); no angle recession",
+      "Goldmann Visual Field": "No field defect OU; patient completes test reliably",
+      "CBC/CMP": "Within normal limits; no systemic immunosuppression evident",
+      "HIV Test": "Negative — patient is immunocompetent",
+    },
+    keyPoints: [
+      "HZO with Hutchinson's sign predicts high risk of ocular involvement (nasociliary branch of V1)",
+      "Ocular findings: pseudo-dendrites, uveitis, trabeculitis with secondary IOP elevation, iris atrophy",
+      "Treat within 72 hours of rash onset: oral antiviral therapy (valacyclovir or acyclovir)",
+      "Topical steroids for the uveitis after antiviral cover; topical antiglaucoma agent for IOP",
+      "Do NOT use topical antiviral alone (systemic treatment required for HZO)",
+    ],
+    modelAssessment: "Herpes Zoster Ophthalmicus OS with active corneal pseudo-dendrites, anterior uveitis, trabeculitis, and secondary open-angle IOP elevation (32 mmHg). Hutchinson's sign present, confirming nasociliary branch involvement.",
+    modelPlan: "1. Oral valacyclovir 1g TID x 7-10 days (initiate immediately — still within 72-hour window).\n2. Prednisolone acetate 1% q2h OS for anterior uveitis (with antiviral cover).\n3. Timolol 0.5% BID OS for IOP reduction; recheck IOP in 48-72 hours.\n4. Lubricating eye drops hourly OS for SPK and ocular surface disease.\n5. Cycloplegia (cyclopentolate 1% BID) OS for synechiae prevention and pain relief.\n6. Follow-up in 48-72 hours; educate patient about post-herpetic neuralgia risk and zoster vaccine.",
+    patientPersonality: {
+      opening: "I had this terrible pain and then the blisters showed up. Now my eye is red and watering.",
+      keywords: {
+        pain: "It started as a burning, stabbing pain on the left side of my face and forehead.",
+        rash: "The blisters appeared 3 days after the pain. They're on my forehead and the tip of my nose.",
+        vision: "My left eye feels gritty and my vision seems a little blurry there.",
+        systemic: "I've been otherwise healthy. My last blood tests were fine.",
+        prior: "I had chickenpox as a child, about 65 years ago. Never had shingles before.",
+        vaccine: "No, I didn't get the shingles vaccine. My doctor mentioned it but I never got around to it.",
+        medications: "I take aspirin for my heart, a cholesterol pill, and a blood pressure medication.",
+      },
+      fallback: "I'm in a lot of pain. Can you help me?",
+    },
+  },
+];
+
+async function addCases() {
+  console.log("Adding 3 extra cases to the database...");
+  for (const c of extraCases) {
+    await db.insert(casesTable).values({
+      title: c.title,
+      topic: c.topic,
+      difficulty: c.difficulty,
+      chiefComplaint: c.chiefComplaint,
+      patientDemographics: c.patientDemographics,
+      reviewOfSystems: c.reviewOfSystems,
+      currentMedications: c.currentMedications,
+      examFindings: c.examFindings,
+      availableAncillaryTests: c.availableAncillaryTests,
+      ancillaryTestResults: c.ancillaryTestResults,
+      keyPoints: c.keyPoints,
+      modelAssessment: c.modelAssessment,
+      modelPlan: c.modelPlan,
+      patientPersonality: c.patientPersonality,
+    });
+    console.log(`  Inserted: ${c.title}`);
+  }
+  console.log("Done! Total cases now includes these 3 additions.");
+}
+
+addCases().catch(console.error).finally(() => process.exit(0));
