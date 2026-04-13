@@ -1,40 +1,73 @@
-# nbeosimp3
-NBEO Part 3 exam simulator for optometry students taking boards
-# NBEO Part 3 Simulator
+# React + TypeScript + Vite
 
-An interactive web-based exam simulator designed to help optometry students prepare for the NBEO Part 3 (TMOD) clinical examination.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## What it does
+Currently, two official plugins are available:
 
-- Presents clinical patient cases in the format of NBEO part 3's exam
-- Provides feedback with explanations after each case
-- Cases over topics tested on NBEO Part 3
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## How to use it
+## React Compiler
 
-1. Read the patient case scenario
-2. Ask patient questions to build a differential and accumulate scored points
-3. Evaluate Case findings, order ancillary tests, and report an assessment and plan
-4. Review feedback 
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Built with
+## Expanding the ESLint configuration
 
-- HTML
-- CSS
-- JavaScript
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Project status
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-This project is actively being developed. Current focus is on building out the case bank and adding features like timed sessions, topic filtering, and score tracking.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## About NBEO Part 3
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-The National Board of Examiners in Optometry (NBEO) Part 3 — also known as TMOD (Treatment and Management of Ocular Disease) — tests clinical decision-making and patient management skills. This simulator is designed to help students practice in an exam-like environment.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Contributing
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-If you are an optometry student or educator and would like to contribute clinical cases, feel free to open an issue or submit a pull request.
-
----
-
-*Built for optometry students, by someone who wants to make board prep easier.*
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```

@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { format, parseISO } from "date-fns";
-import { useGetMetrics } from "@workspace/api-client-react";
+import { useGetMetrics } from "@/api/mock-api";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell
 } from "recharts";
-import { Activity, Target, Award, Clock, History, BarChart3 } from "lucide-react";
+import { Target, Award, Clock, History, BarChart3 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, Badge } from "@/components/ui-elements";
 
 export default function Metrics() {

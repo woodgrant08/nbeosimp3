@@ -14,8 +14,8 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
-import { useGetSession, useGetCase } from "@workspace/api-client-react";
-import type { SubmissionResult } from "@workspace/api-client-react";
+import { useGetSession, useGetCase } from "@/api/mock-api";
+import type { SubmissionResult, HistoryEntry } from "@/api/mock-api";
 import { Card, CardContent, CardHeader, CardTitle, Button, Badge } from "@/components/ui-elements";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +53,7 @@ export default function Results() {
   const modelAssessment = cached?.modelAssessment ?? caseData?.modelAssessment ?? "";
   const modelPlan = cached?.modelPlan ?? caseData?.modelPlan ?? "";
   const candidateAP = cached?.session?.assessmentAndPlan ?? session?.assessmentAndPlan ?? "";
-  const historyLog = cached?.session?.historyLog ?? session?.historyLog ?? [];
+  const historyLog = (cached?.session?.historyLog ?? session?.historyLog ?? []) as HistoryEntry[];
   const requestedTests = cached?.session?.requestedTests ?? session?.requestedTests ?? "";
 
   const isLoading = !cached && !session;

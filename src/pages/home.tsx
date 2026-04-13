@@ -3,72 +3,80 @@ import { Link } from "wouter";
 import { format, differenceInDays, parseISO } from "date-fns";
 import { motion } from "framer-motion";
 import { Calendar, Clock, Activity, Target, Award, CheckCircle2, BarChart2, Coffee, BookOpen, Eye, Microscope, Brain, Users, Glasses, ZoomIn, HeartPulse, Layers, Scan } from "lucide-react";
-import { 
-  useListCases, 
-  useGetMetrics, 
-  useGetTestDate, 
-  useSetTestDate 
-} from "@workspace/api-client-react";
-import { Card, CardContent, Button, Badge, Input } from "@/components/ui-elements";
-
+import {
+  useListCases,
+  useGetMetrics,
+  useGetTestDate,
+  useSetTestDate,
+} from "@/api/mock-api";import { Card, CardContent, Button, Badge, Input } from "@/components/ui-elements";
 const NBEO_CATEGORIES = [
   {
     topic: "Glaucoma",
-    description: "Primary and secondary glaucomas, IOP management, optic nerve evaluation, visual field interpretation, and glaucoma medications.",
+    description:
+      "Primary and secondary glaucomas, IOP management, optic nerve evaluation, visual field interpretation, and glaucoma medications.",
     Icon: Scan,
     color: "bg-blue-500/15 text-blue-400",
   },
   {
     topic: "Refractive Error and Optics",
-    description: "Myopia, hyperopia, astigmatism, presbyopia; spectacle and contact lens prescribing, refractive surgery co-management, and optics principles.",
+    description:
+      "Myopia, hyperopia, astigmatism, presbyopia; spectacle and contact lens prescribing, refractive surgery co-management, and optics principles.",
     Icon: Glasses,
     color: "bg-violet-500/15 text-violet-400",
   },
   {
     topic: "Cornea and External Disease",
-    description: "Corneal dystrophies, infectious keratitis, herpes zoster ophthalmicus, dry eye disease, pterygium, and other external ocular conditions.",
+    description:
+      "Corneal dystrophies, infectious keratitis, herpes zoster ophthalmicus, dry eye disease, pterygium, and other external ocular conditions.",
     Icon: Eye,
     color: "bg-cyan-500/15 text-cyan-400",
   },
   {
     topic: "Anterior Segment Disease",
-    description: "Anterior uveitis, cataract assessment and co-management, iris disorders, lens anomalies, and anterior chamber pathology.",
+    description:
+      "Anterior uveitis, cataract assessment and co-management, iris disorders, lens anomalies, and anterior chamber pathology.",
     Icon: Microscope,
     color: "bg-amber-500/15 text-amber-400",
   },
   {
     topic: "Posterior Segment Disease",
-    description: "Age-related macular degeneration, diabetic retinopathy, retinal vascular occlusions, retinal detachment, vitreous disorders, and choroidal disease.",
+    description:
+      "Age-related macular degeneration, diabetic retinopathy, retinal vascular occlusions, retinal detachment, vitreous disorders, and choroidal disease.",
     Icon: Layers,
     color: "bg-orange-500/15 text-orange-400",
   },
   {
     topic: "Neuro-Ophthalmology",
-    description: "Optic neuritis, papilledema, cranial nerve palsies, visual field defects, pupillary abnormalities, and other neuro-ophthalmic conditions.",
+    description:
+      "Optic neuritis, papilledema, cranial nerve palsies, visual field defects, pupillary abnormalities, and other neuro-ophthalmic conditions.",
     Icon: Brain,
     color: "bg-rose-500/15 text-rose-400",
   },
   {
     topic: "Pediatrics and Binocular Vision",
-    description: "Strabismus, amblyopia, convergence insufficiency, pediatric eye disease, and binocular vision disorders across all ages.",
+    description:
+      "Strabismus, amblyopia, convergence insufficiency, pediatric eye disease, and binocular vision disorders across all ages.",
     Icon: Users,
     color: "bg-green-500/15 text-green-400",
   },
   {
     topic: "Contact Lenses",
-    description: "Soft and rigid lens fitting, specialty lenses, contact lens complications, scleral lenses, and orthokeratology.",
+    description:
+      "Soft and rigid lens fitting, specialty lenses, contact lens complications, scleral lenses, and orthokeratology.",
     Icon: Activity,
     color: "bg-teal-500/15 text-teal-400",
   },
   {
     topic: "Low Vision and Rehabilitation",
-    description: "Functional visual assessment, magnification devices, optical and non-optical aids, eccentric viewing, and vision rehabilitation planning.",
+    description:
+      "Functional visual assessment, magnification devices, optical and non-optical aids, eccentric viewing, and vision rehabilitation planning.",
     Icon: ZoomIn,
     color: "bg-indigo-500/15 text-indigo-400",
   },
   {
     topic: "Systemic Disease",
-    description: "Diabetes, hypertension, autoimmune conditions, and neurological disorders with significant ocular manifestations requiring co-management.",
+    description:
+      "Diabetes, hypertension, autoimmune conditions, and neurological disorders with significant ocular manifestations requiring co-management.",
     Icon: HeartPulse,
     color: "bg-red-500/15 text-red-400",
   },
@@ -95,7 +103,7 @@ export default function Home() {
     : null;
 
   // Group cases by topic locally
-  const groupedCases = cases?.reduce((acc, c) => {
+  const groupedCases = cases?.reduce<Record<string, typeof cases>>((acc, c: any) => {
     if (!acc[c.topic]) acc[c.topic] = [];
     acc[c.topic].push(c);
     return acc;
@@ -144,7 +152,7 @@ export default function Home() {
                     type="date"
                     className="bg-background/60 border-border text-foreground"
                     value={dateInput}
-                    onChange={(e) => setDateInput(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateInput(e.target.value)}
                   />
                   <Button 
                     className="w-full"
@@ -298,7 +306,7 @@ export default function Home() {
 
                   {topicCases.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pl-14">
-                      {topicCases.map((c, idx) => (
+                      {topicCases.map((c: any, idx: number) => (
                         <Link key={c.id} href={`/case/${c.id}`} className="block group">
                           <Card className="h-full hover:border-primary/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <CardContent className="p-6 flex flex-col h-full">

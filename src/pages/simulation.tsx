@@ -4,14 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Clock, Activity, AlertCircle, Send, CheckCircle2, ChevronRight, Stethoscope, FileText
 } from "lucide-react";
-import { 
+import {
   useGetCase, 
   useCreateSession, 
   useAskPatient, 
   useRequestAncillaryTests, 
   useSubmitSession 
-} from "@workspace/api-client-react";
-import type { HistoryEntry, TestResult } from "@workspace/api-client-react";
+} from "@/api/mock-api";
+import type { HistoryEntry, TestResult } from "@/api/mock-api";
 import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Input, Textarea } from "@/components/ui-elements";
 import { cn, formatTime } from "@/lib/utils";
 import { useTimer } from "@/hooks/use-timer";
@@ -498,91 +498,6 @@ export default function Simulation() {
       </div>
     </div>
   );
-
-  const renderReview = () => {
-    if (!reviewData) return null;
-    return (
-      <div className="max-w-5xl mx-auto py-12 px-4 space-y-12">
-        <div className="text-center space-y-6">
-          <div className="inline-block p-1 rounded-3xl bg-gradient-to-tr from-primary to-accent shadow-2xl">
-            <div className="bg-card rounded-[1.4rem] px-12 py-10 flex flex-col items-center justify-center">
-              <span className="text-sm uppercase tracking-widest font-bold text-muted-foreground mb-2">Final Score</span>
-              <div className="text-7xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                {Math.round(reviewData.score)}%
-              </div>
-            </div>
-          </div>
-          <p className="text-xl font-medium max-w-2xl mx-auto text-foreground leading-relaxed">
-            {reviewData.feedback}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card className="border-success/30 bg-success/5 shadow-md">
-            <CardHeader className="border-b border-success/10 pb-4">
-              <CardTitle className="text-success flex items-center gap-2">
-                <CheckCircle2 className="w-6 h-6" /> Key Points Covered
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <ul className="space-y-3">
-                {reviewData.keyPoints.map((p, i) => (
-                  <li key={i} className="flex gap-3 text-foreground font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-success mt-2 shrink-0" /> {p}
-                  </li>
-                ))}
-                {reviewData.keyPoints.length === 0 && <li className="text-muted-foreground italic">None identified.</li>}
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="border-destructive/30 bg-destructive/5 shadow-md">
-            <CardHeader className="border-b border-destructive/10 pb-4">
-              <CardTitle className="text-destructive flex items-center gap-2">
-                <AlertCircle className="w-6 h-6" /> Missed Points
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <ul className="space-y-3">
-                {reviewData.missedPoints.map((p, i) => (
-                  <li key={i} className="flex gap-3 text-foreground font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-destructive mt-2 shrink-0" /> {p}
-                  </li>
-                ))}
-                {reviewData.missedPoints.length === 0 && <li className="text-muted-foreground italic">Perfect, none missed!</li>}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card className="shadow-lg border-primary/10 overflow-hidden">
-          <div className="bg-primary/5 px-6 py-4 border-b border-primary/10">
-            <h3 className="text-xl font-bold font-display text-primary">Model Answer</h3>
-          </div>
-          <CardContent className="p-6 grid md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="font-bold text-muted-foreground uppercase tracking-wider text-sm mb-3">Assessment</h4>
-              <div className="whitespace-pre-wrap text-foreground font-medium bg-muted/30 p-4 rounded-xl">
-                {reviewData.modelAssessment}
-              </div>
-            </div>
-            <div>
-              <h4 className="font-bold text-muted-foreground uppercase tracking-wider text-sm mb-3">Plan</h4>
-              <div className="whitespace-pre-wrap text-foreground font-medium bg-muted/30 p-4 rounded-xl">
-                {reviewData.modelPlan}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="flex justify-center pt-8">
-          <Button size="lg" onClick={() => setLocation('/')} className="px-12">
-            Return to Dashboard
-          </Button>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useRoute, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Clock, CheckCircle2, Activity, Send, ChevronRight, Stethoscope,
-  FileText, AlertCircle, Trophy, Coffee, BarChart2, ArrowRight, X
+  Clock, CheckCircle2, Activity, Send, ChevronRight,
+  FileText, AlertCircle, Trophy, Coffee, BarChart2, ArrowRight
 } from "lucide-react";
 import {
   useCreateExam,
@@ -14,9 +14,9 @@ import {
   useAskPatient,
   useRequestAncillaryTests,
   useSubmitSession,
-} from "@workspace/api-client-react";
-import type { HistoryEntry, TestResult, SubmissionResult, Exam } from "@workspace/api-client-react";
-import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Input, Textarea } from "@/components/ui-elements";
+} from "@/api/mock-api";
+import type { HistoryEntry, TestResult, Exam } from "@/api/mock-api";
+import { Card, CardContent, CardHeader, CardTitle, Button, Input, Textarea } from "@/components/ui-elements";
 import { cn, formatTime } from "@/lib/utils";
 import { useTimer } from "@/hooks/use-timer";
 
@@ -267,7 +267,7 @@ function CaseSimulation({
         id: sessionId,
         data: { historyLog, requestedTests, assessmentAndPlan: assessmentPlan, timeExpired: true },
       });
-      onCaseComplete(sessionId, res.score);
+      onCaseComplete(sessionId, res.score ?? 0);
     } catch {
       onCaseComplete(sessionId, 0);
     }
@@ -329,7 +329,7 @@ function CaseSimulation({
         id: sessionId,
         data: { historyLog, requestedTests, assessmentAndPlan: assessmentPlan, timeExpired: false },
       });
-      onCaseComplete(sessionId, res.score);
+      onCaseComplete(sessionId, res.score ?? 0);
     } catch {
       onCaseComplete(sessionId ?? 0, 0);
     }
