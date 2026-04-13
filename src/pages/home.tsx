@@ -109,6 +109,8 @@ export default function Home() {
     return acc;
   }, {} as Record<string, typeof cases>) || {};
 
+
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}

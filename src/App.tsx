@@ -1,5 +1,6 @@
 import { Switch, Route } from "wouter"
 
+
 import Home from "./pages/home"
 import Simulation from "./pages/simulation"
 import Results from "./pages/results"
