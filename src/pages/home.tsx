@@ -18,7 +18,7 @@ const NBEO_CATEGORIES = [
     color: "bg-blue-500/15 text-blue-400",
   },
   {
-    topic: "Refractive Error and Optics",
+    topic: "Refractive Error",
     description:
       "Myopia, hyperopia, astigmatism, presbyopia; spectacle and contact lens prescribing, refractive surgery co-management, and optics principles.",
     Icon: Glasses,
@@ -67,7 +67,7 @@ const NBEO_CATEGORIES = [
     color: "bg-teal-500/15 text-teal-400",
   },
   {
-    topic: "Low Vision and Rehabilitation",
+    topic: "Low Vision",
     description:
       "Functional visual assessment, magnification devices, optical and non-optical aids, eccentric viewing, and vision rehabilitation planning.",
     Icon: ZoomIn,
